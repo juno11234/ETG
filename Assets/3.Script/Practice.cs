@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class Practice : MonoBehaviour
 {
-   
+   void Test()
+    {
+
+    }
 }

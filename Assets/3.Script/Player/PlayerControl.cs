@@ -3,27 +3,29 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 5f;
-    [SerializeField] GameObject bullet;
+    [SerializeField] GameObject newBullet;
     [SerializeField] Transform gun;
     [SerializeField] float fireRate = 0.5f;
 
+    PBPooling bulletPool;
     Animator animator;
     Rigidbody2D rb;
     PlayerInputHandler inputHandler;
     float lastfire = 0f;
     Vector3 aim;
-    
+
     void Start()
     {
         TryGetComponent<Rigidbody2D>(out rb);
         TryGetComponent<PlayerInputHandler>(out inputHandler);
+        bulletPool = FindAnyObjectByType<PBPooling>();
 
     }
     void Update()
     {
         FlipToMouse();
-       aim=Mouse.Instance.GetMousePos();
-        
+        aim = Mouse.Instance.GetMousePos();
+
     }
     void FixedUpdate()
     {
@@ -39,10 +41,21 @@ public class PlayerControl : MonoBehaviour
         if (Time.time > lastfire + fireRate)
         {
             Vector2 direction = (aim - gun.position).normalized;
-            GameObject newBullet = Instantiate(bullet, gun.position, Quaternion.identity);
+            GameObject newBullet = bulletPool.GetBullet();
+
+            if (newBullet != null)
+            {
+                newBullet.transform.position = gun.transform.position;
+                if (newBullet.TryGetComponent(out PlayerBullet bulletScript))
+                { bulletScript.Direction(direction); }
+            }
 
             lastfire = Time.time;
         }
+    }
+    void ReturnToPool()
+    {
+        bulletPool.ReturnBullet(gameObject);
     }
 
     void FlipToMouse()

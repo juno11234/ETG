@@ -11,7 +11,30 @@ public class PBPooling : MonoBehaviour
     {
         for (int i = 0; i < poolSize; i++)
         {
-            Instantiate(bullet);
+            GameObject obj=Instantiate(bullet);
+            obj.SetActive(false);
+            pool.Enqueue(obj);
         }
+    }
+    public GameObject GetBullet()
+    {
+        GameObject obj;
+
+        if (pool.Count > 0)
+        {
+            obj = pool.Dequeue();
+        }
+        else
+        {
+            obj = Instantiate(bullet);
+        }
+        obj.SetActive(true);
+        return obj;
+    }
+    public void ReturnBullet(GameObject obj)
+    {
+        pool.Enqueue(obj);
+        obj.SetActive(false);
+
     }
 }

@@ -12,17 +12,19 @@ public class DungeonMaker : MonoBehaviour
     [SerializeField] GameObject normalPrefab2;
     [SerializeField] GameObject normalPrefab3;
     [SerializeField] float roomSpacing= 10f;
+    [SerializeField] Tilemap pathrTilemap;
+    [SerializeField] TileBase pathTile;
+    private List<GameObject> spawnedRooms = new List<GameObject>();
+    Path path;
     
   
     DungeonManager dungeonManager;
     Factory roomfactory = new Factory();
     void Start()
     {
-        dungeonManager = new DungeonManager(roomfactory);
-        
-        RenderDungeon();
-       
-      
+        dungeonManager = new DungeonManager(roomfactory);    
+
+        RenderDungeon();       
     }
    
     GameObject GetRoomPrefab(RoomType type)

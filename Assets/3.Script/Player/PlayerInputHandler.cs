@@ -5,7 +5,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+    public float fire { get; private set; }
     public Vector2 moveDirection { get; private set; }
+    PlayerControl playerControl;
 
     void OnMove(InputValue value)
     {
@@ -13,6 +15,12 @@ public class PlayerInputHandler : MonoBehaviour
     }
     void OnFire(InputValue value)
     {
-
+        fire=value.Get<float>();
+        if (fire > 0)
+        {
+            TryGetComponent<PlayerControl>(out playerControl);
+            playerControl.Fire();
+        }
+        
     }
 }

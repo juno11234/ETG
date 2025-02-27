@@ -7,8 +7,7 @@ public class DungeonManager
     public List<Room> roomList { get; private set; }
     Factory roomFactory;
     int roomCount = 6;
-    Tilemap pathTilemap;
-    TileBase pathTile;
+   
     public DungeonManager( Factory factory)
     {
         

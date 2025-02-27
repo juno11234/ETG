@@ -5,8 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class Path : MonoBehaviour
 {
-    [SerializeField] Tilemap pathrTilemap;
-    [SerializeField] TileBase pathTile;
+    Tilemap pathrTilemap;
+     TileBase pathTile;
 
     List<GameObject> roomObj = new List<GameObject>();
 
@@ -45,7 +45,7 @@ public class Path : MonoBehaviour
                 visited.Add(nearRoom);
                 queue.Enqueue(nearRoom);
                 Debug.Log($"방연결됨: {nowRoom.transform.position}-{nearRoom.transform.position}");
-                
+                CreatePath(nowRoom.transform.position, nearRoom.transform.position);
             }
         }
     }
@@ -58,7 +58,34 @@ public class Path : MonoBehaviour
         {
             if (visited.Contains(room)) continue;
 
+            float distance = Vector3.Distance(nowRoom.transform.position, room.transform.position);
+            if (distance < minDis)
+            {
+                minDis = distance;
+                findNearRoom = room;
+            }
 
+        }
+        return findNearRoom;
+    }
+    void CreatePath(Vector3 start,Vector3 end)
+    {
+        Vector3 current = start;
+        Debug.Log( $"길생성{start}-{end}");
+        while (Vector3.Distance(current, end) > 0.5f)
+        {
+            if (Mathf.Abs(current.x - end.x) > Mathf.Abs(current.y - end.y))
+            {
+                current.x += (end.x > current.x) ? 1f : -1f;
+            }
+            else
+            {
+                current.y += (end.y > current.y) ? 1f : -1f;
+            }
+
+            Vector3Int tilePosition = pathrTilemap.WorldToCell(current);
+            pathrTilemap.SetTile(tilePosition, pathTile);
+            Debug.Log($"타일배치{tilePosition}");
         }
     }
 }

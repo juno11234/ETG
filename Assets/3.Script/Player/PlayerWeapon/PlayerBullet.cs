@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerBullet : MonoBehaviour
 {
     [SerializeField] float bulletSpeed=5f;
-    [SerializeField] float bullettime=10f;
+    
     Rigidbody2D rigid;
     PBPooling bulletPool;
 

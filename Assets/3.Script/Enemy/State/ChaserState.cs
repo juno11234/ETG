@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState 
+public class ChaseState 
 {
     void EnterState(EnemyBase enemy)
     {
@@ -16,7 +16,4 @@ public class IdleState
     {
 
     }
-
-
-
 }

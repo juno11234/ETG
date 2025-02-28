@@ -6,6 +6,9 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] GameObject newBullet;
     [SerializeField] Transform gun;
     [SerializeField] float fireRate = 0.5f;
+    [SerializeField] float rollSpeed = 7f;
+    [SerializeField] int HP = 6;
+    
 
     PBPooling bulletPool;
     Animator animator;
@@ -19,13 +22,11 @@ public class PlayerControl : MonoBehaviour
         TryGetComponent<Rigidbody2D>(out rb);
         TryGetComponent<PlayerInputHandler>(out inputHandler);
         bulletPool = FindAnyObjectByType<PBPooling>();
-
     }
     void Update()
     {
         FlipToMouse();
         aim = Mouse.Instance.GetMousePos();
-
     }
     void FixedUpdate()
     {
@@ -53,14 +54,31 @@ public class PlayerControl : MonoBehaviour
             lastfire = Time.time;
         }
     }
+    public void Roll()
+    {
+        
+    }
+    void TakeDamage()
+    {
+        HP -= 1;
+        if (HP <= 0)
+        {
+            Die();
+        }
+    }
+    void Die()
+    {
+
+    }
+    
+   
     void ReturnToPool()
     {
         bulletPool.ReturnBullet(gameObject);
     }
-
+   
     void FlipToMouse()
     {
-
         bool right = transform.localScale.x > 0;
         bool flip = (aim.x > transform.position.x && !right) ||
                     (aim.x < transform.position.x && right);
@@ -69,6 +87,5 @@ public class PlayerControl : MonoBehaviour
         {
             transform.localScale = new Vector2(-transform.localScale.x, 1f);
         }
-
     }
 }

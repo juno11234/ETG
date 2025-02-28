@@ -157,5 +157,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   animator: {fileID: 398437475704072258}
-  dieDelay: 1
-  hp: 0
+  dieDelay: 0.5
+  hp: 2

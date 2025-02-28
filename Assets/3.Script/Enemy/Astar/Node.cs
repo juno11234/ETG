@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class Node
 {
-    public Vector2 Position { get; private set; }
-    public bool IsWalkable { get; private set; }
-    public Node(Vector2 position, bool isWalkable)//위치와 장애물여부
+    public Vector2Int position;
+    public int gCost;
+    public int hCost;
+    public int fCost => gCost + hCost;
+    public Node parent;
+
+    public Node(Vector2Int pos)
     {
-        Position = position;
-        IsWalkable = isWalkable;
+        position = pos;
     }
-
-
 
 }

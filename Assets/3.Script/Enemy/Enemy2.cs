@@ -1,4 +1,4 @@
-public class Enemy1 : EnemyBase
+public class Enemy2 : EnemyBase
 {
     
 
@@ -6,14 +6,9 @@ public class Enemy1 : EnemyBase
     {
         
     }
-    private void Update()
-    {
-        
-    }
     void Fire()
     {
 
     }
-
 
 }

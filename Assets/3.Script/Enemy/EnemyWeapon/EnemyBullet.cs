@@ -1,19 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour
 {
-    [SerializeField] float bulletSpeed = 5f;
+    [SerializeField]
+    float bulletSpeed = 5f;
 
     Rigidbody2D rigid;
-    PBPooling bulletPool;
-
-
+    EnemyBulletPool bulletPool;
+    
     void Awake()
     {
         TryGetComponent<Rigidbody2D>(out rigid);
-        bulletPool = FindAnyObjectByType<PBPooling>();
+        bulletPool = FindAnyObjectByType<EnemyBulletPool>();
     }
-
 
     public void Direction(Vector2 direction)
     {
@@ -22,11 +23,9 @@ public class PlayerBullet : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.CompareTag("Enemy") || coll.CompareTag("Wall"))
-        {
+        if (coll.CompareTag("Player") || coll.CompareTag("Wall"))
+        {            
             bulletPool.ReturnBullet(gameObject);
         }
     }
-
-
 }

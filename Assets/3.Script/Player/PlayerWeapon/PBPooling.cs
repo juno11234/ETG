@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class PBPooling : MonoBehaviour
 {
-    [SerializeField] GameObject bullet;
-    [SerializeField] int poolSize = 20;
+    [SerializeField] 
+    GameObject bullet;
+    
+    [SerializeField] 
+    int poolSize = 20;
+    
     Queue<GameObject> pool = new Queue<GameObject>();
 
     void Start()

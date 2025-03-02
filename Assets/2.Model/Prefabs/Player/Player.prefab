@@ -95,7 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1083349497436799427}
   - component: {fileID: 8549558499749491941}
-  - component: {fileID: 4186381651435111159}
+  - component: {fileID: 5066896791300861856}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -171,7 +171,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &4186381651435111159
+--- !u!95 &5066896791300861856
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -378,10 +378,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  newBullet: {fileID: 0}
   gun: {fileID: 4930279721304582614}
   fireRate: 0.5
+  rollSpeed: 7
+  rollCool: 0.7
+  rollDuration: 0.5
   HP: 6
+  hand: {fileID: 3473690199789377324}
 --- !u!70 &7323304336247620714
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

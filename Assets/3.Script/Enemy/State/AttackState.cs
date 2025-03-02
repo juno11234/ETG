@@ -2,27 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChaseState :IEnemyState
+public class AttackState :IEnemyState
 {
+        
     public void EnterState(EnemyBase enemy)
     {
-        Debug.Log("추격");
+
     }
     public void UpdateState(EnemyBase enemy)
     {
         if (enemy.Target == null) return;
-
         float distancePlayer = Vector2.Distance(enemy.transform.position, enemy.Target.position);
+       
+        // Debug.Log($"[AttackState] 현재 거리: {distancePlayer}, detectRange: {enemy.detectRange}");
 
-        if (distancePlayer <= enemy.detectRange)
+        if (distancePlayer > enemy.detectRange)
         {
-            enemy.SetState(new AttackState());
+            enemy.SetState(new ChaseState());
+           
+            //Debug.Log("추격변경");
         }
         else
         {
-            Vector2 direction = (enemy.Target.position - enemy.transform.position).normalized;
-            enemy.Move(direction);
+            enemy.Attack();
+            
         }
     }
-    
+  
+
+
+
 }

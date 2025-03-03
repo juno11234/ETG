@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3582943363522505184}
   - component: {fileID: 4218201681166220215}
   m_Layer: 0
-  m_Name: Money
+  m_Name: Ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

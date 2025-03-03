@@ -5,10 +5,8 @@ public class Enemy2 : EnemyBase
     [SerializeField]
     Transform enemyGun;
 
-    [SerializeField]
-    int bulletCount = 5;
-
-    [SerializeField]
+    
+    int bulletCount = 5;  
     float spread = 30f;
 
     public override void Attack()
@@ -32,5 +30,5 @@ public class Enemy2 : EnemyBase
         }
 
     }
-
+  
 }

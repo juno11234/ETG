@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyBulletPool : MonoBehaviour
 {
     [SerializeField]
-    int poolSize = 30;
+    int poolSize = 40;
 
     [SerializeField]
     GameObject _bulletPrefab;

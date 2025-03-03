@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
@@ -29,21 +27,33 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     GameObject hand;
 
+    [SerializeField]
+    int maxAmmo = 6;
+
+    [SerializeField]
+    float reloadTime = 2f;
+
+    [SerializeField]
+    Animator gunAni;
+
     PBPooling bulletPool;
     Animator animator;
     Rigidbody2D rb;
     PlayerInputHandler inputHandler;
-    
+
+    int currentAmmo;
+    bool reloading = false;
+    public static bool playerInvincible = false;
     float lastfire = 0f;
-    bool die=false;
+    bool die = false;
     float lastRoolTime = -100f;
     Vector2 aim;
     bool rolling = false;
-    bool invincible = false;
     SpriteRenderer spriteRenderer;
     Color originalColor;
     void Start()
     {
+        currentAmmo = maxAmmo;
         TryGetComponent<Rigidbody2D>(out rb);
         TryGetComponent<PlayerInputHandler>(out inputHandler);
         bulletPool = FindAnyObjectByType<PBPooling>();
@@ -56,7 +66,7 @@ public class PlayerControl : MonoBehaviour
     {
         FlipToMouse();
         aim = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-         
+
     }
     void FixedUpdate()
     {
@@ -65,14 +75,15 @@ public class PlayerControl : MonoBehaviour
 
     void Move()
     {
-        if (rolling||die) return;
+        if (rolling || die) return;
         rb.velocity = inputHandler.moveDirection * moveSpeed;
     }
     public void Fire()
     {
-        if (rolling ||die) return;
+        if (rolling || die || reloading || currentAmmo <= 0) return;
         if (Time.time > lastfire + fireRate)
         {
+            currentAmmo--;
             Vector2 direction = (aim - (Vector2)gun.position).normalized;
             GameObject newBullet = bulletPool.GetBullet();
 
@@ -84,20 +95,39 @@ public class PlayerControl : MonoBehaviour
             }
             lastfire = Time.time;
         }
+        if (currentAmmo == 0)
+        {
+            StartCoroutine(Reload_Co());
+        }
+    }
+    public void Reload()
+    {
+        if (rolling || die || reloading) return;
+        StartCoroutine(Reload_Co());
+
+    }
+    IEnumerator Reload_Co()
+    {
+        gunAni.SetBool("Reload", true);
+        reloading = true;
+        yield return new WaitForSeconds(reloadTime);
+
+        currentAmmo = maxAmmo;
+        gunAni.SetBool("Reload", false);
+        reloading = false;
     }
     public void Roll()
     {
-        if (rolling || Time.time < lastRoolTime + rollCool ||die) return;
+        if (rolling || Time.time < lastRoolTime + rollCool || die) return;
 
         rolling = true;
-        invincible = true;
+        playerInvincible = true;
         lastRoolTime = Time.time;
-
         StartCoroutine(Roll_Co());
     }
 
     IEnumerator Roll_Co()
-    {        
+    {
         float elapsedTime = 0f;
         Vector2 rollDirection = (aim - (Vector2)transform.position).normalized;
 
@@ -111,12 +141,12 @@ public class PlayerControl : MonoBehaviour
             yield return null;
         }
        ;
-        animator.SetBool("Rolling", false);
-        hand.SetActive(true);
+        animator.SetBool("Rolling", false);        
+        hand.SetActive(true);        
         rolling = false;
-        invincible = false;
+        playerInvincible = false;
     }
-     void OnTriggerEnter2D(Collider2D coll)
+    void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.CompareTag("EnemyBullet") && !die)
         {
@@ -125,34 +155,34 @@ public class PlayerControl : MonoBehaviour
     }
     void OnCollisionStay2D(Collision2D coll)
     {
-        if (coll.gameObject.CompareTag("Enemy")&&!die)
+        if (coll.gameObject.CompareTag("Enemy") && !die)
         {
             TakeDamage();
         }
     }
 
-     void TakeDamage()
+    void TakeDamage()
     {
-        if (invincible) return;
+        if (playerInvincible) return;
 
         StartCoroutine(FlashRed());
         HP -= 1;
         if (HP <= 0)
         {
-            Die();            
+            Die();
         }
     }
     IEnumerator FlashRed()
     {
-        invincible=true;
+        playerInvincible = true;
         spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.5f);
         spriteRenderer.color = originalColor;
-        invincible = false;
+        playerInvincible = false;
     }
-    
+
     void Die()
-    {                
+    {
         hand.SetActive(false);
         animator.SetTrigger("Die");
         die = true;
@@ -171,5 +201,5 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    
+
 }

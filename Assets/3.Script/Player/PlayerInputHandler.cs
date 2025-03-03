@@ -3,8 +3,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    public float fire { get; private set; }
-    public float roll { get; private set; }
+    float fire; 
+    float roll; 
+    float reload;
     public Vector2 moveDirection { get; private set; }
     PlayerControl playerControl;
     private void Start()
@@ -30,6 +31,14 @@ public class PlayerInputHandler : MonoBehaviour
         if (roll > 0)
         {
             playerControl.Roll();
+        }
+    }
+    void OnReload(InputValue value)
+    {
+        reload = value.Get<float>();
+        if (reload > 0)
+        {
+            playerControl.Reload();
         }
     }
 }

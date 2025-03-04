@@ -201,6 +201,7 @@ public class PlayerControl : MonoBehaviour
 
     void Die()
     {
+        
         hand.SetActive(false);
         animator.SetTrigger("Die");
         die = true;

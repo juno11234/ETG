@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 8425388903825109202}
   - component: {fileID: 2965766511941583193}
   - component: {fileID: -6078339039433410348}
+  - component: {fileID: 2164104305898498345}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Enemy
@@ -189,7 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   dieDelay: 1
-  hp: 3
+  hp: 20
   attakcCooldown: 2
   bulletPrefab: {fileID: 49891745122029588, guid: 66c6737bf66e043498989b02dc6409ef, type: 3}
   Target: {fileID: 7669953912907245940, guid: 37e0cfaceff4f6043b523f71704b19d6, type: 3}
@@ -199,7 +200,34 @@ MonoBehaviour:
   - {fileID: 394178593182719543}
   pattern2fire: {fileID: 5035738715418475474}
   attackCool2: 3
-  HpForPattern: 2
+  HpForPattern: 11
+--- !u!50 &2164104305898498345
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498342504253057526}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1000
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &2790517986172841545
 GameObject:
   m_ObjectHideFlags: 0

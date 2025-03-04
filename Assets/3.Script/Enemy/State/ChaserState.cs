@@ -6,7 +6,7 @@ public class ChaseState :IEnemyState
 {
     public void EnterState(EnemyBase enemy)
     {
-        Debug.Log("Ãß°Ý");
+        
     }
     public void UpdateState(EnemyBase enemy)
     {

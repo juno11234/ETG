@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4821003874613059796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6353704396007968234}
+  - component: {fileID: 7266346413445247646}
+  m_Layer: 0
+  m_Name: DungeonMaker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6353704396007968234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821003874613059796}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3566643, y: 4.573905, z: -0.037321202}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7266346413445247646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821003874613059796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de545c36cf32b4045b06361f49945640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartPrefab: {fileID: 7075057116421246201, guid: 2cd4e1d608c288348acd3f1234b94e7d, type: 3}
+  BossPrefab: {fileID: 9066265227542194135, guid: d61f999d15278314e8e5f8e426c0b7bd, type: 3}
+  normalPrefab1: {fileID: 9066265227542194135, guid: a884698f01b56e149b769829f2eb98ae, type: 3}
+  normalPrefab2: {fileID: 9066265227542194135, guid: dc588c8448d37a7469f5dc95be28939e, type: 3}
+  normalPrefab3: {fileID: 9066265227542194135, guid: 8380623410a68964e9df491d0fb994f4, type: 3}
+  roomSpacing: 1
+  pathrTilemap: {fileID: 0}
+  pathTile: {fileID: 0}

@@ -386,7 +386,7 @@ MonoBehaviour:
   HP: 6
   hand: {fileID: 3473690199789377324}
   maxAmmo: 6
-  reloadTime: 2
+  reloadTime: 1.5
   gunAni: {fileID: 5066896791300861856}
 --- !u!70 &7323304336247620714
 CapsuleCollider2D:

@@ -51,6 +51,8 @@ public class PlayerControl : MonoBehaviour
     bool rolling = false;
     SpriteRenderer spriteRenderer;
     Color originalColor;
+    Coroutine reloadCoroutine;
+
     void Start()
     {
         currentAmmo = maxAmmo;
@@ -103,22 +105,37 @@ public class PlayerControl : MonoBehaviour
     public void Reload()
     {
         if (rolling || die || reloading) return;
-        StartCoroutine(Reload_Co());
-
+        reloadCoroutine=StartCoroutine(Reload_Co());
     }
     IEnumerator Reload_Co()
     {
-        gunAni.SetBool("Reload", true);
+        gunAni.SetBool("Reload",true);
         reloading = true;
         yield return new WaitForSeconds(reloadTime);
 
         currentAmmo = maxAmmo;
         gunAni.SetBool("Reload", false);
+        reloading = false;                
+    }
+    void CancelReload()
+    {
+        if (reloadCoroutine != null)
+        {
+            StopCoroutine(reloadCoroutine);
+            reloadCoroutine = null;
+        }
+
         reloading = false;
+        
     }
     public void Roll()
     {
         if (rolling || Time.time < lastRoolTime + rollCool || die) return;
+
+        if (reloading)
+        {
+            CancelReload();
+        }
 
         rolling = true;
         playerInvincible = true;
@@ -146,6 +163,7 @@ public class PlayerControl : MonoBehaviour
         rolling = false;
         playerInvincible = false;
     }
+
     void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.CompareTag("EnemyBullet") && !die)
@@ -155,7 +173,7 @@ public class PlayerControl : MonoBehaviour
     }
     void OnCollisionStay2D(Collision2D coll)
     {
-        if (coll.gameObject.CompareTag("Enemy") && !die)
+        if (coll.gameObject.CompareTag("Trap")||coll.gameObject.CompareTag("Enemy") && !die)
         {
             TakeDamage();
         }

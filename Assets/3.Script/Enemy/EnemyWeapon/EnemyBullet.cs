@@ -27,7 +27,7 @@ public class EnemyBullet : MonoBehaviour
         {            
             bulletPool.ReturnBullet(gameObject);
         }
-        if (coll.CompareTag("Wall")|| coll.CompareTag("Door"))
+        if (coll.CompareTag("Wall") || coll.CompareTag("Door") || coll.CompareTag("MapObject"))
         {
             bulletPool.ReturnBullet(gameObject);
         }

@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1109653054595810452}
   - component: {fileID: 6715310939474289232}
   - component: {fileID: 7454597261813048089}
+  - component: {fileID: -551570597385032689}
   m_Layer: 0
   m_Name: Wood
-  m_TagString: Untagged
+  m_TagString: MapObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,3 +143,15 @@ CapsuleCollider2D:
   m_Offset: {x: -0.008886516, y: -0.035545886}
   m_Size: {x: 0.46855724, y: 0.5968784}
   m_Direction: 0
+--- !u!114 &-551570597385032689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215493730257148130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f34d5b38c2aa5641b8af76302bc60e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -3,9 +3,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    float fire; 
-    float roll; 
+    float fire;
+    float roll;
     float reload;
+    public float tableAction { get; private set; }
     public Vector2 moveDirection { get; private set; }
     PlayerControl playerControl;
     private void Start()
@@ -40,5 +41,9 @@ public class PlayerInputHandler : MonoBehaviour
         {
             playerControl.Reload();
         }
+    }
+    void OnTableAction(InputValue value)
+    {
+        tableAction = value.Get<float>();
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -36,6 +37,9 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     Animator gunAni;
 
+    [SerializeField]
+    Image hurtEffect;
+
     PBPooling bulletPool;
     Animator animator;
     Rigidbody2D rb;
@@ -52,6 +56,8 @@ public class PlayerControl : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Color originalColor;
     Coroutine reloadCoroutine;
+    BulletUI bulletUi;
+    HPUI hpUI;
 
     void Start()
     {
@@ -62,6 +68,9 @@ public class PlayerControl : MonoBehaviour
         TryGetComponent<SpriteRenderer>(out spriteRenderer);
         TryGetComponent<Animator>(out animator);
         originalColor = spriteRenderer.color;
+         hpUI= FindAnyObjectByType<HPUI>();
+        bulletUi = FindAnyObjectByType<BulletUI>();
+        bulletUi.UpdateAmmo(currentAmmo);
 
     }
     void Update()
@@ -86,6 +95,7 @@ public class PlayerControl : MonoBehaviour
         if (Time.time > lastfire + fireRate)
         {
             currentAmmo--;
+            bulletUi.UpdateAmmo(currentAmmo);
             Vector2 direction = (aim - (Vector2)gun.position).normalized;
             GameObject newBullet = bulletPool.GetBullet();
 
@@ -104,18 +114,19 @@ public class PlayerControl : MonoBehaviour
     }
     public void Reload()
     {
-        if (rolling || die || reloading) return;
-        reloadCoroutine=StartCoroutine(Reload_Co());
+        if (rolling || die || reloading || currentAmmo == maxAmmo) return;
+        reloadCoroutine = StartCoroutine(Reload_Co());
     }
     IEnumerator Reload_Co()
     {
-        gunAni.SetBool("Reload",true);
+        gunAni.SetBool("Reload", true);
         reloading = true;
         yield return new WaitForSeconds(reloadTime);
 
         currentAmmo = maxAmmo;
+        bulletUi.UpdateAmmo(currentAmmo);
         gunAni.SetBool("Reload", false);
-        reloading = false;                
+        reloading = false;
     }
     void CancelReload()
     {
@@ -126,7 +137,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         reloading = false;
-        
+
     }
     public void Roll()
     {
@@ -158,8 +169,8 @@ public class PlayerControl : MonoBehaviour
             yield return null;
         }
        ;
-        animator.SetBool("Rolling", false);        
-        hand.SetActive(true);        
+        animator.SetBool("Rolling", false);
+        hand.SetActive(true);
         rolling = false;
         playerInvincible = false;
     }
@@ -173,7 +184,7 @@ public class PlayerControl : MonoBehaviour
     }
     void OnCollisionStay2D(Collision2D coll)
     {
-        if (coll.gameObject.CompareTag("Trap")||coll.gameObject.CompareTag("Enemy") && !die)
+        if (coll.gameObject.CompareTag("Trap") || coll.gameObject.CompareTag("Enemy") && !die)
         {
             TakeDamage();
         }
@@ -185,6 +196,7 @@ public class PlayerControl : MonoBehaviour
 
         StartCoroutine(FlashRed());
         HP -= 1;
+        hpUI.UdateHPUI(HP);
         if (HP <= 0)
         {
             Die();
@@ -194,14 +206,15 @@ public class PlayerControl : MonoBehaviour
     {
         playerInvincible = true;
         spriteRenderer.color = Color.red;
+        hurtEffect.color = new Color(1f, 0f, 0f, 1f);
         yield return new WaitForSeconds(0.5f);
+        hurtEffect.color = new Color(1f, 0f, 0f, 0f);
         spriteRenderer.color = originalColor;
         playerInvincible = false;
     }
 
     void Die()
     {
-        
         hand.SetActive(false);
         animator.SetTrigger("Die");
         die = true;

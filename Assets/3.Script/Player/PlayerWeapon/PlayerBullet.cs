@@ -22,7 +22,7 @@ public class PlayerBullet : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.CompareTag("Enemy") || coll.CompareTag("Wall")|| coll.CompareTag("Door"))
+        if (coll.CompareTag("Enemy") || coll.CompareTag("Wall")|| coll.CompareTag("Door")||coll.CompareTag("MapObject"))
         {
             bulletPool.ReturnBullet(gameObject);
         }

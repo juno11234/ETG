@@ -10,6 +10,7 @@ TagManager:
   - EnemyBullet
   - Door
   - Trap
+  - MapObject
   layers:
   - Default
   - TransparentFX

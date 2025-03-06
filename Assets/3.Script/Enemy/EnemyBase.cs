@@ -43,7 +43,7 @@ public class EnemyBase : MonoBehaviour
     Color originalColor;
     EnemyType enemyType;
     EnemyPool enemyPool;
-    Boss boss;
+
     public event Action OnDeath;
 
 
@@ -57,7 +57,8 @@ public class EnemyBase : MonoBehaviour
         SetState(new ChaseState());
         bulletPool = FindAnyObjectByType<EnemyBulletPool>();
         enemyPool = FindAnyObjectByType<EnemyPool>();
-        boss = FindAnyObjectByType<Boss>();
+
+
     }
     private void Update()
     {
@@ -106,6 +107,8 @@ public class EnemyBase : MonoBehaviour
 
     protected void Die()
     {
+
+
         capsule.enabled = false;
         //OnDeath.Invoke();
         rb.velocity = Vector2.zero;
@@ -113,23 +116,22 @@ public class EnemyBase : MonoBehaviour
     }
     IEnumerator DieAni_Co()
     {
-        if (boss)
-        {
-            GameObject child = GameObject.Find("Boss2");
-            child.gameObject.SetActive(false);
-        }
         animator.SetTrigger("Die");
         yield return new WaitForSeconds(dieDelay);
-       
-        if (!boss)
+
+        GameObject child = GameObject.Find("Boss2");
+        if (child == null)
         {
             OnDeath?.Invoke();
+            if (gameObject == null) Debug.Log("ø…¡ß≥Œ");
             enemyPool.ReturnEnemy(gameObject, enemyType);
         }
         else
-        {           
+        {
+            child.gameObject.SetActive(false);
             Destroy(gameObject, dieDelay);
         }
+
     }
     IEnumerator FlashRed()
     {

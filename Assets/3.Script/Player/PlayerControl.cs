@@ -58,6 +58,7 @@ public class PlayerControl : MonoBehaviour
     Coroutine reloadCoroutine;
     BulletUI bulletUi;
     HPUI hpUI;
+    GameOverUI gameOverUI;
 
     void Start()
     {
@@ -71,13 +72,13 @@ public class PlayerControl : MonoBehaviour
          hpUI= FindAnyObjectByType<HPUI>();
         bulletUi = FindAnyObjectByType<BulletUI>();
         bulletUi.UpdateAmmo(currentAmmo);
+        gameOverUI = FindAnyObjectByType<GameOverUI>();
 
     }
     void Update()
     {
         FlipToMouse();
         aim = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
     }
     void FixedUpdate()
     {
@@ -216,7 +217,7 @@ public class PlayerControl : MonoBehaviour
     void Die()
     {
         hand.SetActive(false);
-        animator.SetTrigger("Die");
+        gameOverUI.TriggerGameOver();
         die = true;
     }
 

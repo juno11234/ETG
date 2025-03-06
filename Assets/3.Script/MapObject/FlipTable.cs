@@ -7,7 +7,7 @@ public class FlipTable : MonoBehaviour
     Animator animator;
     SpriteRenderer sprite;
     BoxCollider2D box;
-    int tableHp = 20;
+    int tableHp = 10;
     void Start()
     {
         TryGetComponent<Animator>(out animator);

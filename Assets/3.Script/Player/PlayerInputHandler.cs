@@ -6,6 +6,7 @@ public class PlayerInputHandler : MonoBehaviour
     float fire;
     float roll;
     float reload;
+    public float restart { get; private set; }
     public float tableAction { get; private set; }
     public Vector2 moveDirection { get; private set; }
     PlayerControl playerControl;
@@ -45,5 +46,10 @@ public class PlayerInputHandler : MonoBehaviour
     void OnTableAction(InputValue value)
     {
         tableAction = value.Get<float>();
+       
+    }
+    void OnRestart(InputValue value)
+    {
+        restart = value.Get<float>();
     }
 }

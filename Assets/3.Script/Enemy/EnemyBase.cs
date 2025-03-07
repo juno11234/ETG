@@ -31,7 +31,7 @@ public class EnemyBase : MonoBehaviour
     public Transform Target;
     public float detectRange = 5f;
 
-    protected float lastAttack = -100f;
+    protected float lastAttack = -10f;
     protected int attackDMG = 1;
     protected EnemyBulletPool bulletPool;
     protected bool die = false;
@@ -43,9 +43,10 @@ public class EnemyBase : MonoBehaviour
     Color originalColor;
     EnemyType enemyType;
     EnemyPool enemyPool;
+    ClearUI clearUi;
 
     public event Action OnDeath;
-
+  
 
     protected void Awake()
     {
@@ -57,7 +58,7 @@ public class EnemyBase : MonoBehaviour
         SetState(new ChaseState());
         bulletPool = FindAnyObjectByType<EnemyBulletPool>();
         enemyPool = FindAnyObjectByType<EnemyPool>();
-
+        clearUi = FindAnyObjectByType<ClearUI>();
 
     }
     private void Update()
@@ -83,7 +84,7 @@ public class EnemyBase : MonoBehaviour
 
     public virtual void Attack()
     { }
-    protected void TakeDamge()
+    protected virtual void TakeDamge()
     {
         StartCoroutine(FlashRed());
         hp -= 1;
@@ -107,8 +108,6 @@ public class EnemyBase : MonoBehaviour
 
     protected void Die()
     {
-
-
         capsule.enabled = false;
         //OnDeath.Invoke();
         rb.velocity = Vector2.zero;
@@ -128,11 +127,12 @@ public class EnemyBase : MonoBehaviour
         }
         else
         {
-            child.gameObject.SetActive(false);
-            Destroy(gameObject, dieDelay);
-        }
 
+            clearUi.Clear();
+            gameObject.SetActive(false);
+        }
     }
+  
     IEnumerator FlashRed()
     {
         spriteRender.color = Color.red;

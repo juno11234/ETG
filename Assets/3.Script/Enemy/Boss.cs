@@ -17,10 +17,22 @@ public class Boss : EnemyBase
     [SerializeField]
     int HpForPattern=30;
 
+    BossHPUI hpBar;
+   
+
+
     float lastAttack2 = 0f;
     int bulletCount = 5;
     int circleBullet = 30;
-    float spreadAngle = 30f;
+    float spreadAngle = 30f;    
+
+
+    public void Initialize(BossHPUI hpBarRef)
+    {
+        hpBar = hpBarRef;
+        hpBar.Initialize(hp);
+        
+    }
 
     public override void Attack()
     {
@@ -76,5 +88,17 @@ public class Boss : EnemyBase
             bullet.GetComponent<EnemyBullet>().Direction(circleDirection);
         }
     }
-        
+    protected override void TakeDamge()
+    {
+        base.TakeDamge();
+        hpBar.UpdateHP(hp);
+
+        if (hp <= 0)
+        {
+            hpBar.Hide();
+            PlayerControl.playerInvincible = true;
+            
+        }
+    }
+   
 }

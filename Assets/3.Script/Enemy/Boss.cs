@@ -96,7 +96,7 @@ public class Boss : EnemyBase
         if (hp <= 0)
         {
             hpBar.Hide();
-            PlayerControl.playerInvincible = true;
+            PlayerControl.rolling = true;
             
         }
     }

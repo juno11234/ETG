@@ -23,7 +23,7 @@ public class EnemyBullet : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.CompareTag("Player") && !PlayerControl.playerInvincible )
+        if (coll.CompareTag("Player") && !PlayerControl.rolling )
         {            
             bulletPool.ReturnBullet(gameObject);
         }

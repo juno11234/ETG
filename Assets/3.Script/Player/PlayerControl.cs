@@ -47,12 +47,12 @@ public class PlayerControl : MonoBehaviour
 
     int currentAmmo;
     bool reloading = false;
-    public static bool playerInvincible = false;
+    public static bool rolling = false;
     float lastfire = 0f;
     bool die = false;
     float lastRoolTime = -100f;
     Vector2 aim;
-    bool rolling = false;
+    
     SpriteRenderer spriteRenderer;
     Color originalColor;
     Coroutine reloadCoroutine;
@@ -149,8 +149,8 @@ public class PlayerControl : MonoBehaviour
             CancelReload();
         }
 
+       
         rolling = true;
-        playerInvincible = true;
         lastRoolTime = Time.time;
         StartCoroutine(Roll_Co());
     }
@@ -172,8 +172,8 @@ public class PlayerControl : MonoBehaviour
        ;
         animator.SetBool("Rolling", false);
         hand.SetActive(true);
+        
         rolling = false;
-        playerInvincible = false;
     }
 
     void OnTriggerEnter2D(Collider2D coll)
@@ -193,7 +193,7 @@ public class PlayerControl : MonoBehaviour
 
     void TakeDamage()
     {
-        if (playerInvincible) return;
+        if (rolling) return;
 
         StartCoroutine(FlashRed());
         HP -= 1;
@@ -205,13 +205,13 @@ public class PlayerControl : MonoBehaviour
     }
     IEnumerator FlashRed()
     {
-        playerInvincible = true;
+        rolling = true;
         spriteRenderer.color = Color.red;
         hurtEffect.color = new Color(1f, 0f, 0f, 1f);
         yield return new WaitForSeconds(0.5f);
         hurtEffect.color = new Color(1f, 0f, 0f, 0f);
         spriteRenderer.color = originalColor;
-        playerInvincible = false;
+        rolling = false;
     }
 
     void Die()

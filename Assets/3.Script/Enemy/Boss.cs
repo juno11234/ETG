@@ -19,8 +19,6 @@ public class Boss : EnemyBase
 
     BossHPUI hpBar;
    
-
-
     float lastAttack2 = 0f;
     int bulletCount = 5;
     int circleBullet = 30;

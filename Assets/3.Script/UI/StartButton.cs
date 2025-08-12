@@ -33,4 +33,8 @@ public class StartButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         SceneManager.LoadScene("Main");
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

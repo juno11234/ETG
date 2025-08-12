@@ -6,20 +6,12 @@ public class EnemyBase : MonoBehaviour
 {
     [SerializeField]
     float speed = 3f;
-
-
-    Animator animator;
-
+  
     [SerializeField]
     float dieDelay = 1f;
 
     [SerializeField]
     protected int hp = 2;
-
-    protected int Hp
-    {
-        get { return hp; }
-    }
 
     [SerializeField]
     protected float attakcCooldown = 2f;
@@ -27,7 +19,12 @@ public class EnemyBase : MonoBehaviour
     [SerializeField]
     GameObject bulletPrefab;
 
+    protected int Hp
+    {
+        get { return hp; }
+    }
 
+    Animator animator;
     public Transform Target;
     public float detectRange = 5f;
 
@@ -46,7 +43,6 @@ public class EnemyBase : MonoBehaviour
     ClearUI clearUi;
 
     public event Action OnDeath;
-  
 
     protected void Awake()
     {
@@ -71,7 +67,6 @@ public class EnemyBase : MonoBehaviour
     public void SetState(IEnemyState newState)
     {
         // Debug.Log($"[EnemyBase] 상태 변경: {currentState?.GetType().Name} → {newState.GetType().Name}");
-
         currentState = newState;
         currentState.EnterState(this);
     }
@@ -127,18 +122,18 @@ public class EnemyBase : MonoBehaviour
         }
         else
         {
-
             clearUi.Clear();
             gameObject.SetActive(false);
         }
     }
-  
+
     IEnumerator FlashRed()
     {
         spriteRender.color = Color.red;
         yield return new WaitForSeconds(0.2f);
         spriteRender.color = originalColor;
     }
+
     void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.CompareTag("bullet"))

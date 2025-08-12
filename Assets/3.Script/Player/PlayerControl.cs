@@ -90,6 +90,7 @@ public class PlayerControl : MonoBehaviour
         if (rolling || die) return;
         rb.velocity = inputHandler.moveDirection * moveSpeed;
     }
+
     public void Fire()
     {
         if (rolling || die || reloading || currentAmmo <= 0) return;
@@ -113,11 +114,13 @@ public class PlayerControl : MonoBehaviour
             StartCoroutine(Reload_Co());
         }
     }
+
     public void Reload()
     {
         if (rolling || die || reloading || currentAmmo == maxAmmo) return;
         reloadCoroutine = StartCoroutine(Reload_Co());
     }
+
     IEnumerator Reload_Co()
     {
         gunAni.SetBool("Reload", true);
@@ -129,6 +132,7 @@ public class PlayerControl : MonoBehaviour
         gunAni.SetBool("Reload", false);
         reloading = false;
     }
+
     void CancelReload()
     {
         if (reloadCoroutine != null)
@@ -140,6 +144,7 @@ public class PlayerControl : MonoBehaviour
         reloading = false;
 
     }
+
     public void Roll()
     {
         if (rolling || Time.time < lastRoolTime + rollCool || die) return;
@@ -169,7 +174,7 @@ public class PlayerControl : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-       ;
+     
         animator.SetBool("Rolling", false);
         hand.SetActive(true);
         
@@ -183,6 +188,7 @@ public class PlayerControl : MonoBehaviour
             TakeDamage();
         }
     }
+
     void OnCollisionStay2D(Collision2D coll)
     {
         if (coll.gameObject.CompareTag("Trap") || coll.gameObject.CompareTag("Enemy") && !die)
@@ -227,7 +233,6 @@ public class PlayerControl : MonoBehaviour
         bool right = transform.localScale.x > 0;
         bool flip = (aim.x > transform.position.x && !right) ||
                     (aim.x < transform.position.x && right);
-
         if (flip)
         {
             transform.localScale = new Vector2(-transform.localScale.x, 1f);
